@@ -61,7 +61,7 @@ export default function PDFAnalyzerPage() {
     event.preventDefault();
     setJson(null); setError(null); setLoading(true);
 
-    const form = event.currentTarget;
+    // const form = event.currentTarget; // Removed unused variable
     const originalFile = fileInputRef.current?.files?.[0] || null;
     const formData = new FormData();
     try {
@@ -81,7 +81,7 @@ export default function PDFAnalyzerPage() {
           const copy = await newPdf.copyPages(originalPdf, indices.filter(i => i < pageCount));
           copy.forEach(p => newPdf.addPage(p));
           const out = await newPdf.save();
-          const outBlob = new Blob([out], { type: 'application/pdf' });
+          const outBlob = new Blob([new Uint8Array(out)], { type: 'application/pdf' });
           fileToSend = new File([outBlob], originalFile.name.replace(/\.pdf$/i, '') + '.first5.pdf', {
             type: 'application/pdf',
           });
@@ -124,7 +124,7 @@ export default function PDFAnalyzerPage() {
         <Card className="p-8 shadow-xl border border-slate-700 bg-slate-900/90 text-slate-100">
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-400">ACORD 25 Certificate Analyzer</h1>
-            <p className="mt-2 text-slate-300">Upload a PDF; we’ll validate it’s ACORD 25 and extract structured data.</p>
+            <p className="mt-2 text-slate-300">Upload a PDF; we&apos;ll validate it&apos;s ACORD 25 and extract structured data.</p>
           </div>
 
           <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
@@ -203,7 +203,7 @@ export default function PDFAnalyzerPage() {
             <div className="mt-8">
               <h2 className="text-xl font-semibold mb-3 text-slate-100">Analysis Results</h2>
               <pre className="bg-slate-950 text-slate-100 p-4 rounded-md overflow-auto text-sm whitespace-pre-wrap border border-slate-800 shadow-inner max-h-[60vh]">
-{JSON.stringify(json, null, 2)}
+                {JSON.stringify(json, null, 2)}
               </pre>
             </div>
           )}
