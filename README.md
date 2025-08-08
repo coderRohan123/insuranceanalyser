@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ACORD 25 Certificate Analyzer
+
+A Next.js application that analyzes ACORD 25 Certificate of Liability Insurance forms using AI. Upload a PDF and get structured data extraction with validation.
+
+## Features
+
+- **Client-side PDF Processing**: Truncates PDFs to first 5 pages in the browser before upload
+- **AI-Powered Analysis**: Uses Google Gemini 2.5 Flash Lite via Next.js AI SDK
+- **Strict Validation**: Only processes genuine ACORD 25 COI forms (≥95% confidence)
+- **High Concurrency**: Edge runtime supports 100+ simultaneous users
+- **Modern UI**: Dark theme with drag-and-drop file upload
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **AI**: Google Gemini via @ai-sdk/google
+- **PDF Processing**: pdf-lib for client-side truncation
+- **Styling**: Tailwind CSS
+- **Type Safety**: TypeScript
+- **Validation**: Zod schema validation
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/coderRohan123/insuranceanalyser.git
+   cd insuranceanalyser
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**:
+   Create a `.env.local` file:
+   ```env
+   GEMINI_API_KEY=your_google_gemini_api_key_here
+   ```
+
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Usage
+
+1. Upload an ACORD 25 Certificate of Insurance PDF
+2. The app will automatically truncate it to the first 5 pages
+3. AI analyzes the document and extracts structured data
+4. View the results in JSON format
+
+## API Endpoints
+
+- `POST /api/analyze`: Analyzes uploaded PDF and returns structured data
+
+## Deployment
+
+This project is optimized for deployment on Vercel:
+
+1. Connect your GitHub repository to Vercel
+2. Set the `GEMINI_API_KEY` environment variable
+3. Deploy automatically on push to main branch
+
+## Project Structure
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+├── app/
+│   ├── api/analyze/route.ts    # AI analysis endpoint
+│   ├── page.tsx                # Main UI component
+│   └── layout.tsx              # Root layout
+├── components/ui/              # Reusable UI components
+├── lib/utils.ts               # Utility functions
+└── package.json               # Dependencies
+```
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Next.js AI SDK](https://sdk.vercel.ai/docs)
+- [Google Gemini API](https://ai.google.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open source and available under the [MIT License](LICENSE).
